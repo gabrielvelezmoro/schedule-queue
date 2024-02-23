@@ -20,7 +20,9 @@ export class TweetsCountService {
     console.log('procurando tweets');
 
     let offset = await this.cacheManager.get<number>('tweet-offset');
+
     offset = offset === undefined ? 0 : offset;
+
     const tweets: Tweet[] = await this.tweetsModel.findAll({
       offset,
       limit: this.limit,
@@ -31,6 +33,8 @@ export class TweetsCountService {
     if (tweets.length === this.limit)
       this.cacheManager.set('tweet-offset', offset + this.limit, 1 * 60 * 10);
 
-    console.log(`achou ${tweets.length} tweets`);
+    console.log(` ${tweets.length} tweets encontrados`);
   }
 }
+
+//fila - criar tarefas
